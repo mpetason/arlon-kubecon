@@ -1,0 +1,21 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: arlonctl-1-xenial
+  namespace: argocd
+  finalizers:
+  # This solves issue #17
+  - resources-finalizer.argocd.argoproj.io/foreground
+spec:
+  syncPolicy:
+    automated:
+      prune: true
+  destination:
+    name: arlonctl-1
+    namespace: default
+  project: default
+  source:
+    repoURL: https://github.com/mpetason/arlon-kubecon.git
+    path: clusters/arlonctl-1/workload/xenial
+    targetRevision: HEAD
